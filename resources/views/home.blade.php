@@ -63,7 +63,7 @@
                     <div class="carousel">
                         <div class="carousel__images">
                             <img src="{{ asset('assets/images/Rectangle 4.png') }}" alt="An image of an event hall" class="carousel__image image--active">
-                            <img style="display: none;" src="{{ asset('assets/images/Rectangle 6.png') }}" alt="An image of a center table in an event hall" class="carousel__image">
+                            <img src="{{ asset('assets/images/Rectangle 6.png') }}" alt="An image of a center table in an event hall" class="carousel__image">
                             <img src="{{ asset('assets/images/Rectangle 7.png') }}" alt="An image of a round table settings of an event hall" class="carousel__image">
                         </div>
                         <div class="carousel__controller">
@@ -634,6 +634,24 @@
         toggleClick('marital_status');
         toggleClick('attendance_choice');
 
+    </script>
+    <script>
+        let controllers = document.querySelectorAll('.carousel__ellipse');
+        let images = document.querySelectorAll('.carousel__image');
+
+        controllers.forEach((ellipse, index) => {
+            ellipse.addEventListener("click", (e) => {
+                for(let i=0; i < controllers.length; i++){
+                    if (index != i) {
+                        images[i].classList.remove("image--active");
+                        controllers[i].classList.remove("ellipse--active");
+                    }else{
+                        images[i].classList.add("image--active");
+                        controllers[i].classList.add("ellipse--active");
+                    }
+                }
+            })
+        })
     </script>
 </body>
 </html>
