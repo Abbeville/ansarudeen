@@ -33,7 +33,7 @@
                 </h2>
 
                 <p class="hero__description">
-                    Helping young single Muslims choose the right partner while guiding the already married, with the right & relevant information, to keeping keeping a happy home.
+                    Helping young single Muslims choose the right partner while guiding the already married, with the right & relevant information, to keeping a happy home.
                 </p>
 
                 <a href="#registration-section " class="btn btn--primary hero__button">Register Now</a>
@@ -217,7 +217,6 @@
                                 <input type="hidden" name="reference" value="{{ Paystack::genTranxRef() }}" />
                                 <input type="hidden" name="logo" />
                                 <input type="hidden" name="title" value="{{ config('app.name') }}" />
-                                <input type="hidden" name="phone_number" value="081339984839" />
                                 <input type="hidden" name="amount" id="paystack_amount" value="" />
                                 <!-- Tab 1 -->
                                 <div class="tab tab--active" id="tab-1">
@@ -248,7 +247,7 @@
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M7.99999 3.99999C8.73332 3.99999 9.33332 4.59999 9.33332 5.33332C9.33332 6.06666 8.73332 6.66666 7.99999 6.66666C7.26666 6.66666 6.66666 6.06666 6.66666 5.33332C6.66666 4.59999 7.26666 3.99999 7.99999 3.99999ZM7.99999 10.6667C9.79999 10.6667 11.8667 11.5267 12 12H3.99999C4.15332 11.52 6.20666 10.6667 7.99999 10.6667ZM7.99999 2.66666C6.52666 2.66666 5.33332 3.85999 5.33332 5.33332C5.33332 6.80666 6.52666 7.99999 7.99999 7.99999C9.47332 7.99999 10.6667 6.80666 10.6667 5.33332C10.6667 3.85999 9.47332 2.66666 7.99999 2.66666ZM7.99999 10.6667C6.21999 10.6667 2.66666 11.56 2.66666 13.3333V14.6667H13.3333V13.3333C13.3333 11.56 9.77999 10.6667 7.99999 10.6667Z" fill="#333333"/>
                                                 </svg>
-                                                <input type="text" class="input" name="first_name">
+                                                <input type="text" class="input form-error" name="first_name">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -267,6 +266,15 @@
                                                     <path d="M16.5 4.5C16.5 3.675 15.825 3 15 3H3C2.175 3 1.5 3.675 1.5 4.5V13.5C1.5 14.325 2.175 15 3 15H15C15.825 15 16.5 14.325 16.5 13.5V4.5ZM15 4.5L9 8.25L3 4.5H15ZM15 13.5H3V6L9 9.75L15 6V13.5Z" fill="#CFCEC9"/>
                                                 </svg>
                                                 <input type="text" class="input" name="email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="" class="form-label">Phone Number</label>
+                                            <div class="input-group">
+                                                {{-- <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M16.5 4.5C16.5 3.675 15.825 3 15 3H3C2.175 3 1.5 3.675 1.5 4.5V13.5C1.5 14.325 2.175 15 3 15H15C15.825 15 16.5 14.325 16.5 13.5V4.5ZM15 4.5L9 8.25L3 4.5H15ZM15 13.5H3V6L9 9.75L15 6V13.5Z" fill="#CFCEC9"/>
+                                                </svg> --}}
+                                                <input type="number" class="input" name="phone_number">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -300,8 +308,12 @@
                                             <span for="" class="form-label">How did you hear about this programme?</span>
 
                                             <div class="custom-radio-group">
-                                                <input type="radio" id="ads_mosque" class="custom-radio" name="programme_awareness" value="ads_mosque">
-                                                <label for="ads_mosque">ADS Mosque</label>
+                                                <input type="radio" id="ads_mosque" class="custom-radio" name="programme_awareness" value="ADS" checked>
+                                                <label for="ads_mosque">ADS</label>
+                                            </div>
+                                            <div class="custom-radio-group">
+                                                <input type="radio" id="adyan" class="custom-radio" name="programme_awareness" value="ADYAN">
+                                                <label for="adyan">ADS</label>
                                             </div>
                                             <div class="custom-radio-group">
                                                 <input type="radio" id="social_media" class="custom-radio" name="programme_awareness" value="social_media">
@@ -394,6 +406,10 @@
                                                 <div class="form-group">
                                                     <label for="" class="form-label">Email Address</label>
                                                     <p class="form-text" id="email"></p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label">Phone Number</label>
+                                                    <p class="form-text" id="phone_number"></p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -497,6 +513,12 @@
 
         let continueButton = document.querySelector('#continueButton')
         let backButton = document.querySelector('#backButton')
+        let inputs = document.querySelectorAll('input');
+        inputs.forEach((inputElement) => {
+            inputElement.addEventListener("blur", (e) => {
+                e.target.parentElement.classList.remove("form-error");
+            })
+        })
 
         if(currentStep == 0 || currentStep == 3)
         {
@@ -507,6 +529,11 @@
 
         continueButton.addEventListener("click", (e) => {
             e.preventDefault();
+
+            if (!validation(currentStep)) {
+                console.log(currentStep);
+                return;
+            }
             steps[currentStep].classList.add('step--done');
             tabs[currentStep].classList.remove('tab--active');
             currentStep++
@@ -516,7 +543,7 @@
             (currentStep == 0 || currentStep == 3) ? backButton.classList.add('btn--hide') : backButton.classList.remove('btn--hide');
             (currentStep == 3) ? continueButton.classList.add('btn--hide') : continueButton.classList.remove('btn--hide');
             console.log('Validating...');
-            validate(currentStep);
+            bindData(currentStep);
         });
 
         backButton.addEventListener("click", (e) => {
@@ -531,7 +558,55 @@
             (currentStep == 0 || currentStep == 3) ? backButton.classList.add('btn--hide') : backButton.classList.remove('btn--hide');
         });
 
-        function validate(step) {
+        function validation(step){
+            switch (step) {
+                case 0:
+                    const requiredFields = ['first_name', 'last_name', 'email', 'phone_number'];
+
+                    for(let i = 0; i < requiredFields.length; i++) {
+                        let inputField = document.querySelector(`input[name="${requiredFields[i]}"]`);
+
+                        if (inputField.value == '') {
+                            inputField.parentElement.classList.add('form-error');
+                            inputField.focus();
+                            return false;
+                        }
+                    }
+                    return true;
+
+                    break;
+                case 1:
+                    const pageTwoRequiredFields = ['spouse_name'];
+
+                    for(let i = 0; i < pageTwoRequiredFields.length; i++) {
+                        if(pageTwoRequiredFields[i] == 'spouse_name') {
+                            console.log(document.querySelector('input[name="attendance_choice"').value);
+                            let inputField = document.querySelector(`input[name="${pageTwoRequiredFields[i]}"]`);
+                            let attendanceChoices = document.querySelectorAll('input[name="attendance_choice"]');
+                            let choice;
+                            for(const attendanceChoice of attendanceChoices ) {
+                                if (attendanceChoice.checked) {
+                                    choice = attendanceChoice.value;
+                                    break;
+                                }
+                            }
+
+                            if (inputField.value == '' && choice == 'couple') {
+                                inputField.parentElement.classList.add('form-error');
+                                inputField.focus();
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function bindData(step) {
+
             if(step == 2) {
                 let maritalStatuses = document.querySelectorAll('input[name="marital_status"]');
                 let genders = document.querySelectorAll('input[name="gender"]');
@@ -582,6 +657,9 @@
                 let email = document.querySelector('input[name="email"]');
                 document.querySelector('#email').innerText = email.value;
 
+                let phoneNumber = document.querySelector('input[name="phone_number"]');
+                document.querySelector('#phone_number').innerText = phoneNumber.value;
+
                 let otherAwareness = document.querySelector('input[name="other_awareness"]');
                 if (otherAwareness.value == '') {
                     document.querySelector('#other_awareness').innerText = '';
@@ -600,8 +678,6 @@
 
                 let question = document.querySelector('textarea[name="question"]');
                 document.querySelector('#question').innerText = question.value;
-
-
             }
         }
     </script>

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->enum('programme_awareness', ['ads_mosque', 'social_media', 'a_friend', 'others']);
+            $table->enum('programme_awareness', ['ADS', 'ADYAN', 'social_media', 'a_friend', 'others']);
             $table->string('other_awareness')->nullable();
             $table->enum('attendance_choice', ['single', 'couple']);
             $table->text('expectation')->nullable();
