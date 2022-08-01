@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->enum('marital_status', ['single', 'married']);
             $table->enum('gender', ['male', 'female']);
-            $table->text('location');
+            $table->text('location')->nullable();
             $table->string('spouse_name')->nullable();
             $table->boolean('payment_status')->default(false);
             $table->timestamp('email_verified_at')->nullable();

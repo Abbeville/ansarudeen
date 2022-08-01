@@ -17,22 +17,37 @@ class PaymentController extends Controller
 {
     public function redirectToGateway(Request $request)
     {
+        $messages = [
+            'first_name.required' => 'Please enter your first name',
+            'last_name.required' => 'Please enter your last name',
+            'email.required' => 'Please enter your email address',
+            'phone.required' => 'Please enter your phone number',
+            'spouse_name.required' => 'Please enter your spouse name',
+            'programme_awareness.required' => 'Please let us know how you heard about this programme'
+        ];
         // Create the user and save all the details
         $validatedDatas = $request->validate([
-            'first_name' => 'string|required',
-            'last_name' => 'string|required',
-            'email' => 'email|required',
-            'phone_number' => 'string|required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required',
             'marital_status' => 'string|required',
             'gender' => 'string|required',
-            'location' => 'string|required',
-            'spouse_name' => 'string|required',
-            'programme_awareness' => 'string|required',
-            // 'other_awareness' => Rule::requiredIf($request->programme_awareness == 'others'),
+            // 'location' => 'string',
+            'spouse_name' => Rule::requiredIf($request->attendance_choice == 'couple'),
+            'programme_awareness' => 'required',
             'attendance_choice' => 'string|required',
-            'expectation' => 'string',
-            'question' => 'string'
-        ]);
+            // 'expectation' => 'string',
+            // 'question' => 'string'
+        ],$messages);
+
+        $attendance_choice = $request->attendance_choice;
+        $amount_to_pay = $request->amount;
+        if ($attendance_choice == 'couple') {
+            $request->amount = 10000 * 100;
+        }else{
+            $request->amount = 5000 * 100;
+        }
 
         $user = User::create($validatedDatas);
 
