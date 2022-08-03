@@ -33,7 +33,9 @@
                 </h2>
 
                 <p class="hero__description">
-                    Helping young single Muslims choose the right partner while guiding the already married, with the right & relevant information, to keeping a happy home.
+                    After the chills and fever of love, how nice and fruitful is the 98% of Marriage?
+                    The willingness to do the right thing through righteous ways as a man, woman, couple as well as intending couple is the primary goal of every love story.
+                    Do you wish to know how to add the right ingredients to your relationship? Then join Us Now
                 </p>
 
                 <a href="#registration-section " class="btn btn--primary hero__button">Register Now</a>
@@ -73,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="direction-link" href="#">Get direction</a>
+                <a class="direction-link" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=3%20Lekki%20-%20Epe%20Expy%2C%20Victoria%20Island%20106104%2C%20Lagos">Get direction</a>
             </div>
         </section>
 
@@ -265,7 +267,7 @@
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M16.5 4.5C16.5 3.675 15.825 3 15 3H3C2.175 3 1.5 3.675 1.5 4.5V13.5C1.5 14.325 2.175 15 3 15H15C15.825 15 16.5 14.325 16.5 13.5V4.5ZM15 4.5L9 8.25L3 4.5H15ZM15 13.5H3V6L9 9.75L15 6V13.5Z" fill="#CFCEC9"/>
                                                 </svg>
-                                                <input type="text" class="input" name="email">
+                                                <input type="email" class="input" name="email">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -308,12 +310,12 @@
                                             <span for="" class="form-label">How did you hear about this programme?</span>
 
                                             <div class="custom-radio-group">
-                                                <input type="radio" id="ads_mosque" class="custom-radio" name="programme_awareness" value="ADS" checked>
-                                                <label for="ads_mosque">ADS</label>
+                                                <input type="radio" id="ads_mosque" class="custom-radio" name="programme_awareness" value="ADS Mosque" checked>
+                                                <label for="ads_mosque">ADS Mosque</label>
                                             </div>
                                             <div class="custom-radio-group">
-                                                <input type="radio" id="adyan" class="custom-radio" name="programme_awareness" value="ADYAN">
-                                                <label for="adyan">ADS</label>
+                                                <input type="radio" id="adyan" class="custom-radio" name="programme_awareness" value="ADYAN Platforms">
+                                                <label for="adyan">ADYAN Platforms</label>
                                             </div>
                                             <div class="custom-radio-group">
                                                 <input type="radio" id="social_media" class="custom-radio" name="programme_awareness" value="social_media">
@@ -517,6 +519,12 @@
         inputs.forEach((inputElement) => {
             inputElement.addEventListener("blur", (e) => {
                 e.target.parentElement.classList.remove("form-error");
+
+                let pattern = /[A-z0-9]@[a-z].[a-z]/;
+
+                if(e.target.getAttribute('type') == 'email' && !pattern.test(e.target.value) ) {
+                    e.target.parentElement.classList.add("form-error");
+                }
             })
         })
 
@@ -530,7 +538,7 @@
         continueButton.addEventListener("click", (e) => {
             e.preventDefault();
 
-            if (!validation(currentStep)) {
+            if (currentStep < 2 && !validation(currentStep)) {
                 console.log(currentStep);
                 return;
             }
@@ -542,7 +550,7 @@
 
             (currentStep == 0 || currentStep == 3) ? backButton.classList.add('btn--hide') : backButton.classList.remove('btn--hide');
             (currentStep == 3) ? continueButton.classList.add('btn--hide') : continueButton.classList.remove('btn--hide');
-            console.log('Validating...');
+            console.log('Binding...');
             bindData(currentStep);
         });
 
@@ -561,7 +569,7 @@
         function validation(step){
             switch (step) {
                 case 0:
-                    const requiredFields = ['first_name', 'last_name', 'email', 'phone_number'];
+                    const requiredFields = ['first_name', 'last_name', 'email', 'phone_number', 'location'];
 
                     for(let i = 0; i < requiredFields.length; i++) {
                         let inputField = document.querySelector(`input[name="${requiredFields[i]}"]`);
@@ -571,13 +579,18 @@
                             inputField.focus();
                             return false;
                         }
+
+                        let pattern = /[A-z0-9]@[a-z].[a-z]/;
+
+                        if(inputField.getAttribute('type') == 'email' && !pattern.test(inputField.value)){
+                            return false;
+                        }
                     }
                     return true;
 
                     break;
                 case 1:
                     const pageTwoRequiredFields = ['spouse_name'];
-
                     for(let i = 0; i < pageTwoRequiredFields.length; i++) {
                         if(pageTwoRequiredFields[i] == 'spouse_name') {
                             console.log(document.querySelector('input[name="attendance_choice"').value);
@@ -590,7 +603,6 @@
                                     break;
                                 }
                             }
-
                             if (inputField.value == '' && choice == 'couple') {
                                 inputField.parentElement.classList.add('form-error');
                                 inputField.focus();
