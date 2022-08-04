@@ -348,10 +348,10 @@
                                         <div class="form-group">
                                             <span class="form-label">Attendance Choice</span>
                                             <div class="radio-button-group">
-                                                <label for="single" data-modifier="attendance_choice" class="button-radio button-radio--accent">Single</label>
-                                                <label for="couple" data-modifier="attendance_choice" class="button-radio">Couple</label>
-                                                <input type="radio" id="single" name="attendance_choice" value="single" checked>
-                                                <input type="radio" id="couple" name="attendance_choice" value="couple">
+                                                <label for="attendance_single" data-modifier="attendance_choice" class="button-radio button-radio--accent">Single</label>
+                                                <label for="attendance_couple" data-modifier="attendance_choice" class="button-radio">Couple</label>
+                                                <input type="radio" id="attendance_single" name="attendance_choice" value="single" checked>
+                                                <input type="radio" id="attendance_couple" name="attendance_choice" value="couple">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -494,7 +494,7 @@
             <p class="footer__text">Get in Touch</p>
             <div class="footer__contacts">
                 <p class="footer__phone">+234 708 268 4450</p>
-                <p class="footer__email">adyanlsc@gmail.com</p>
+                <p class="footer__email">info@adyanlsc.org.ng</p>
             </div>
             <div class="footer__social-icons">
                 <img src="{{ asset('assets/images/instagram.svg') }}" alt="Instagram Icon">
