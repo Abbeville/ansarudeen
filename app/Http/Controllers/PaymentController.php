@@ -17,6 +17,36 @@ class PaymentController extends Controller
 {
     public function redirectToGateway(Request $request)
     {
+        if($request->email != ''){
+            $user = User::where('email', $request->email)->first();
+
+            if ($user) {
+                if($user->hasPaid()){
+                    Session::flash('success', 'You have already made payment. Or do you want to dash us money?');
+                    return redirect()->route('home');
+                }else{
+                    //Create transaction for user.
+                    $transaction = Transaction::create([
+                        'user_id' => $user->id,
+                        'amount' => $request->amount / 100,
+                        'fee_code' => $request->paymentcode,
+                        'txref' => $request->reference,
+                        'invoice_pin' => strtoupper(substr($request->ref, 0, 9)),
+                        'status' => 'pending',
+                        'currency' => 'NGN'
+                    ]);
+
+                    //Save partial information about the transaction
+                    try{
+                        return Paystack::getAuthorizationUrl()->redirectNow();
+
+                    }catch(\Exception $e) {
+                        // dd($e);
+                        return Redirect::back()->withMessage(['msg'=>'The paystack token has expired. Please refresh the page and try again.', 'type'=>'error']);
+                    }
+                }
+            }
+        }
         $messages = [
             'first_name.required' => 'Please enter your first name',
             'last_name.required' => 'Please enter your last name',

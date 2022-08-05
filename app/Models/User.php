@@ -58,4 +58,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function hasPaid()
+    {
+        $succesful_transaction = $this->transactions()->where('status', 'success')->first();
+        if($succesful_transaction){
+            return true;
+        }
+
+        return false;
+    }
 }
