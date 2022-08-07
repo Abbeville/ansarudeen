@@ -293,8 +293,8 @@
                                             <div class="radio-button-group">
                                                 <label for="male" data-modifier="gender" class="button-radio button-radio--accent">Male</label>
                                                 <label for="female" data-modifier="gender" class="button-radio">Female</label>
-                                                <input type="radio" id="male" name="gender" value="male" >
-                                                <input type="radio" id="female" name="gender" value="female" checked>
+                                                <input type="radio" id="male" name="gender" value="male" checked>
+                                                <input type="radio" id="female" name="gender" value="female">
                                             </div>
                                         </div>
                                         <div class="form-group">
