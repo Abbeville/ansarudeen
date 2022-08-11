@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function succesfulTransactions()
+    {
+        return $this->transactions()->where('status', 'success')->get();
+    }
+
     public function hasPaid()
     {
         $succesful_transaction = $this->transactions()->where('status', 'success')->first();
@@ -67,5 +72,14 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function getPaymentPackage()
+    {
+        if ($this->hasPaid) {
+            return $this->transactions()->where('status', 'success')->value('fee_code');
+        }
+
+        return '';
     }
 }

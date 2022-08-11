@@ -21,3 +21,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('/pay', [App\Http\Controllers\PaymentController::class, 'redirectToGateway'])->name('pay');
 
 Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 'handleGatewayCallback'])->name('payment');
+
+// Admin route
+
+Route::get('super/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
