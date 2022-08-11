@@ -54,7 +54,7 @@
                     <tbody>
                         @forelse ($users as $user)
                         @php
-                            if (!user->hasPaid()) {
+                            if (!$user->hasPaid()) {
                                 continue;
                             }
 
