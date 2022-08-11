@@ -54,6 +54,10 @@
                     <tbody>
                         @forelse ($users as $user)
                         @php
+                            if (!user->hasPaid()) {
+                                continue;
+                            }
+
                             if ($user->hasPaid()) {
                                 $status = 'Paid';
                                 $status_color = 'success';
