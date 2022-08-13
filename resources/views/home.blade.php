@@ -646,14 +646,14 @@
                     if (attendanceChoice.checked) {
                         document.querySelector('#attendance_choice').innerText = attendanceChoice.value;
                         if (attendanceChoice.value == 'couple') {
-                            document.querySelector('#ticket_amount').innerText = 'NGN 10,000';
+                            document.querySelector('#ticket_amount').innerText = 'NGN 10,150';
                             document.querySelector('#ticket_type').innerText = 'Couple\'s Ticket';
-                            document.querySelector('#paystack_amount').value = 10000 * 100;
+                            document.querySelector('#paystack_amount').value = 10150 * 100;
                             document.querySelector('#paymentcode').value = "COUPLE's-TICKET";
                         }else {
-                            document.querySelector('#ticket_amount').innerText = 'NGN 5,000';
+                            document.querySelector('#ticket_amount').innerText = 'NGN 5,150';
                             document.querySelector('#ticket_type').innerText = 'Single\'s Ticket';
-                            document.querySelector('#paystack_amount').value = 5000 * 100;
+                            document.querySelector('#paystack_amount').value = 5150 * 100;
                             document.querySelector('#paymentcode').value = "SINGLE's-TICKET";
                         }
                         break;

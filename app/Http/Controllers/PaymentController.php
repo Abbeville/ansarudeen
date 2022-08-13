@@ -74,9 +74,9 @@ class PaymentController extends Controller
         $attendance_choice = $request->attendance_choice;
         $amount_to_pay = $request->amount;
         if ($attendance_choice == 'couple') {
-            $request->amount = 10000 * 100;
+            $request->amount = 10150 * 100;
         }else{
-            $request->amount = 5000 * 100;
+            $request->amount = 5150 * 100;
         }
 
         $user = User::create($validatedDatas);
