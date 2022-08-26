@@ -25,3 +25,4 @@ Route::get('/payment/callback', [App\Http\Controllers\PaymentController::class, 
 // Admin route
 
 Route::get('super/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('super/dashboard/users/{user_id}', [App\Http\Controllers\AdminController::class, 'show'])->name('admin.user.show');

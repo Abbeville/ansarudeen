@@ -15,6 +15,8 @@
         </style>
         <link href="{{ asset('assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('assets/css/admin/styles.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/normalize.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
         <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -29,61 +31,76 @@
               </a>
 
               <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+                <li class="nav-item"><a href="{{ route('admin.dashboard') }}" class="nav-link active" aria-current="page">Home</a></li>
               </ul>
             </header>
           </div>
 
           <main>
             <div class="container">
-                <h1 class="mt-5">User Lists & Transaction Status</h1>
-                <p class="lead">List of Registered Attendees</p>
+                <h1 class="mt-5">User Details</h1>
 
-                <table class="table table-striped" id="dataTable">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Marital Status</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Ticket Type</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($users as $user)
-                        @php
-                            if (!$user->hasPaid()) {
-                                continue;
-                            }
-
-                            if ($user->hasPaid()) {
-                                $status = 'Paid';
-                                $status_color = 'success';
-                            }else{
-                                $status = 'Not Paid';
-                                $status_color = 'danger';
-                            }
-                        @endphp
-                        <tr>
-                            <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $user->first_name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->marital_status }}</td>
-                            <td>{{ $user->gender }}</td>
-                            <td>{{ $user->transactions->where('status', 'success')->first()->fee_code }}</td>
-                            <td><span class="badge text-bg-{{ $status_color }}">{{ $status }}</span></td>
-                            <td><a role="button" class="btn btn-primary btn-sm" href="{{ route('admin.user.show', $user->id) }}">View</a></td>
-                        </tr>
-                        @empty
-                        {{ 'No data found'}}
-                        @endforelse
-                    </tbody>
-                </table>
+                <section class="tab-content">
+                        <div class="personal">
+                            <div class="grid form-grid--1x2 form-grid--1x3">
+                                <div class="form-group">
+                                    <label for="" class="form-label">First Name</label>
+                                    <p class="form-text" id="first_name">{{ $user->first_name }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Last Name</label>
+                                    <p class="form-text" id="last_name">{{ $user->last_name }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Marital Status</label>
+                                    <p class="form-text" id="marital_status">{{ $user->marital_status }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Gender</label>
+                                    <p class="form-text" id="gender">{{ $user->gender }} </p>
+                                </div>
+                            </div>
+                            <div class="grid form-grid--1x3">
+                                <div class="form-group">
+                                    <label for="" class="form-label">Location</label>
+                                    <p class="form-text" id="location">{{ $user->location }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Email Address</label>
+                                    <p class="form-text" id="email">{{ $user->email }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Phone Number</label>
+                                    <p class="form-text" id="phone_number">{{ $user->phone_number }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="form-label">How did you hear about this programme?</label>
+                                <p class="form-text" id="programme_awareness" style="display: inline-block">{{ $user->detail->programme_awareness }}</p>
+                                <p class="form-text" id="other_awareness" style="display:inline-block; margin-left: 20px">{{ $user->detail->other_awareness }}</p>
+                            </div>
+                        </div>
+                        <div class="preferences">
+                            <div class="grid form-grid--1x2 form-grid--1x3">
+                                <div class="form-group">
+                                    <label for="" class="form-label">Attendance Choice</label>
+                                    <p class="form-text" id="attendance_choice">{{ $user->detail->attendance_choice }}</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="form-label">Spouse's Name</label>
+                                    <p class="form-text" id="spouse_name">{{ $user->spouse_name }}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="form-label">Your Expectations from the programme?</label>
+                                <p class="form-text" id="expectation">{{ $user->detail->expectation }}</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="form-label">Your possible question for the panelists?</label>
+                                <p class="form-text" id="question">{{ $user->detail->question }}</p>
+                            </div>
+                        </div>
+                    </section>
             </div>
           </main>
           <script>
